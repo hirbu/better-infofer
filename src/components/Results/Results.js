@@ -14,7 +14,7 @@ export default function Results() {
   const After = () => (
     <ul>
       {results.map((result) => (
-        <Result result={result} />
+        <Result key={result.id} result={result} />
       ))}
     </ul>
   );

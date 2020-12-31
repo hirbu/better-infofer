@@ -7,8 +7,6 @@ exports.handler = async (event, context) => {
   const arrival = params.arrival;
   const date = params.date;
 
-  console.log({ departure, arrival, date });
-
   const browser = await chromium.puppeteer.launch({
     executablePath: await chromium.executablePath,
     args: chromium.args,
@@ -37,10 +35,13 @@ exports.handler = async (event, context) => {
 
   await page.waitForSelector(".div-itineraries-departure-arrival");
 
-  const results = await page.evaluate(() => {
+  let id = 0;
+  const results = await page.evaluate((id) => {
     const fares = document.querySelectorAll("#div-results > ul > li");
 
     return [...fares].map((fare) => ({
+      id: id++,
+
       departure: {
         station: fare.querySelectorAll(".text-1-1rem")[0].textContent.trim(),
         date: fare
@@ -81,7 +82,7 @@ exports.handler = async (event, context) => {
         url: fare.querySelector(".col-8 .div-middle div > a").href,
       },
     }));
-  });
+  }, id);
 
   await browser.close();
 

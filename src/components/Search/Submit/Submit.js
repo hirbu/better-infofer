@@ -5,6 +5,7 @@ import moment from "moment";
 import QueryContext from "../../../context/query.context";
 import ErrorsContext from "../../../context/errors.context";
 import ResultsContext from "../../../context/results.context";
+import InfoContext from "../../../context/info.context";
 
 import "./Submit.css";
 
@@ -14,6 +15,7 @@ export default function Submit() {
   const { departure, arrival, date } = useContext(QueryContext);
   const { setDepartureErr, setArrivalErr } = useContext(ErrorsContext);
   const { setResults } = useContext(ResultsContext);
+  const { setIndex } = useContext(InfoContext);
 
   const error = (string, value, setErr) => {
     if (value === "") {
@@ -51,7 +53,7 @@ export default function Submit() {
       })
         .then((response) => response.json())
         .then((json) => {
-          console.log(json);
+          setIndex(-1);
           setResults(json);
         });
     }

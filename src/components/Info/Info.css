@@ -1,10 +1,24 @@
 .info {
   display: flex;
+  overflow-y: auto;
 }
 
-.info.before > * {
+.info > .text {
   font-size: 1.5rem;
   align-self: center;
   margin: 0 auto;
   color: rgba(0, 0, 0, 0.5);
+}
+
+.info > div {
+  width: 100%;
+}
+
+.info p {
+  padding: 0 2rem;
+  font-size: 2rem;
+}
+
+.info p span:not(.no) {
+  font-weight: 600;
 }
