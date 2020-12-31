@@ -1,0 +1,45 @@
+.result {
+  display: flex;
+  width: 100%;
+  border-bottom: 1px solid black;
+  justify-content: space-evenly;
+  font-size: 2rem;
+  padding: 1rem 0;
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+}
+
+.result[data-disabled="true"] {
+  opacity: 0.6;
+}
+
+.result[data-disabled="true"] h3 {
+  font-weight: 400;
+}
+
+.rdecoration p {
+  margin: 0;
+  text-align: center;
+  font-size: 1.8rem;
+}
+
+.rdecoration hr {
+  height: 1px;
+  border: none;
+  background-color: black;
+}
+
+.result:hover::after {
+  content: "\203A";
+  position: absolute;
+  top: 50%;
+  right: 5%;
+  transform: translateY(-50%);
+  font-size: 5rem;
+  font-weight: 400;
+}
+
+.result[data-disabled="true"]:hover::after {
+  font-weight: 100;
+}

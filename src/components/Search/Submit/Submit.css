@@ -1,0 +1,11 @@
+.button {
+  font-size: 3.5rem;
+  cursor: pointer;
+  color: #000;
+  background: none;
+  border: none;
+  text-transform: lowercase;
+  font-weight: 900;
+  letter-spacing: -2px;
+  user-select: none;
+}

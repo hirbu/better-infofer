@@ -1,0 +1,18 @@
+.results {
+  display: flex;
+}
+
+.results > *.text {
+  font-size: 1.5rem;
+  align-self: center;
+  margin: 0 auto;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.results ul {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+}

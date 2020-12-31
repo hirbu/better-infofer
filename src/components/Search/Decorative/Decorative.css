@@ -1,0 +1,20 @@
+.decorative {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+.logo-wrapper {
+  width: 10rem;
+  height: 10rem;
+  margin: 0 0.5rem;
+}
+
+.title {
+  font-size: 5rem;
+  font-weight: 900;
+  margin: 0;
+  letter-spacing: -2px;
+}
