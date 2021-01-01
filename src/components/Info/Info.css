@@ -22,3 +22,7 @@
 .info p span:not(.no) {
   font-weight: 600;
 }
+
+.info p:last-of-type {
+  padding-bottom: 2rem;
+}

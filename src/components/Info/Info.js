@@ -16,6 +16,7 @@ export default function Info() {
   useEffect(() => {
     if (index !== -1) {
       const url = result.train.url;
+      setDelay("Loading...");
 
       fetch("/.netlify/functions/delay", {
         method: "POST",
@@ -29,7 +30,7 @@ export default function Info() {
         .then((data) => data.text())
         .then((text) => setDelay(text));
     }
-  });
+  }, [index, result]);
 
   const Pre = () => (
     <p className="text">The information about the trip will show here.</p>
@@ -47,7 +48,7 @@ export default function Info() {
       </p>
       <p>
         <span>Date of departure: </span>
-        {result.departure.date}
+        {result.departure.date + " " + new Date().getFullYear()}
       </p>
       <hr />
       <p>
@@ -60,7 +61,7 @@ export default function Info() {
       </p>
       <p>
         <span>Date of arrival: </span>
-        {result.arrival.date}
+        {result.arrival.date + " " + new Date().getFullYear()}
       </p>
       <hr />
       <p>

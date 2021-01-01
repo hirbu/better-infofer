@@ -16,3 +16,15 @@
   overflow-x: hidden;
   overflow-y: auto;
 }
+
+.results .display {
+  height: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid black;
+  text-transform: lowercase;
+  font-size: 2rem;
+  font-weight: 100;
+  cursor: pointer;
+}
