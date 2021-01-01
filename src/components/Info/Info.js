@@ -1,4 +1,4 @@
-import { useContext, useState, Suspense, useEffect } from "react";
+import { useContext, useState, useEffect } from "react";
 
 import ResultsContext from "../../context/results.context";
 import InfoContext from "../../context/info.context";
@@ -6,10 +6,30 @@ import InfoContext from "../../context/info.context";
 import "./Info.css";
 
 export default function Info() {
+  const [delay, setDelay] = useState("Loading...");
+
   const { results } = useContext(ResultsContext);
   const { index } = useContext(InfoContext);
 
   const result = results[index];
+
+  useEffect(() => {
+    if (index !== -1) {
+      const url = result.train.url;
+
+      fetch("/.netlify/functions/delay", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+        },
+        body: JSON.stringify({
+          url: url,
+        }),
+      })
+        .then((data) => data.text())
+        .then((text) => setDelay(text));
+    }
+  });
 
   const Pre = () => (
     <p className="text">The information about the trip will show here.</p>
@@ -45,9 +65,7 @@ export default function Info() {
       <hr />
       <p>
         <span>Delay: </span>
-        <Suspense fallback={"Loading..."}>
-          <Delay url={result.train.url} />
-        </Suspense>
+        {delay}
       </p>
       <p>
         <span>Past: </span>
@@ -73,23 +91,3 @@ export default function Info() {
 
   return <div className="info">{index === -1 ? <Pre /> : <After />}</div>;
 }
-
-const Delay = ({ url }) => {
-  const [delay, setDelay] = useState(-1);
-
-  useEffect(() => {
-    fetch("/.netlify/functions/delay", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-      },
-      body: JSON.stringify({
-        url: url,
-      }),
-    })
-      .then((data) => data.text())
-      .then((text) => setDelay(text));
-  }, [url]);
-
-  return <div>{delay}</div>;
-};
