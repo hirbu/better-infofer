@@ -74,7 +74,8 @@ export default function Info() {
       </p>
       <p>
         <span>Train type and number </span>
-        <a href={result.train.url} rel="noopener nofollow" target="_blank">
+        {/* eslint-disable-next-line react/jsx-no-target-blank */}
+        <a target="_blank" rel="noopener nofollow" href={result.train.url}>
           {result.train.type}
           {result.train.number}
         </a>
