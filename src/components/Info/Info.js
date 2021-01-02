@@ -28,7 +28,7 @@ export default function Info() {
         }),
       })
         .then((data) => data.text())
-        .then((text) => setDelay(text));
+        .then((text) => setDelay(text.replace(".", "")));
     }
   }, [index, result]);
 
@@ -39,52 +39,52 @@ export default function Info() {
   const After = () => (
     <div>
       <p>
-        <span>Station of departure: </span>
+        <span>Station of departure </span>
         {result.departure.station}
       </p>
       <p>
-        <span>Time of departure: </span>
+        <span>Time of departure </span>
         {result.departure.time}
       </p>
       <p>
-        <span>Date of departure: </span>
+        <span>Date of departure </span>
         {result.departure.date + " " + new Date().getFullYear()}
       </p>
       <hr />
       <p>
-        <span>Station of arrival: </span>
+        <span>Station of arrival </span>
         {result.arrival.station}
       </p>
       <p>
-        <span>Time of arrival: </span>
+        <span>Time of arrival </span>
         {result.arrival.time}
       </p>
       <p>
-        <span>Date of arrival: </span>
+        <span>Date of arrival </span>
         {result.arrival.date + " " + new Date().getFullYear()}
       </p>
       <hr />
       <p>
-        <span>Delay: </span>
+        <span>Delay </span>
         {delay}
       </p>
       <p>
-        <span>Past: </span>
+        <span>Past </span>
         {result.fare.completed ? "Yes" : "No"}
       </p>
       <p>
-        <span>Train type and number: </span>
+        <span>Train type and number </span>
         <a href={result.train.url} rel="noopener nofollow" target="_blank">
           {result.train.type}
           {result.train.number}
         </a>
       </p>
       <p>
-        <span>Numbers of train stops: </span>
+        <span>Numbers of train stops </span>
         {result.fare.stops.length}
       </p>
       <p>
-        <span>Train stops: </span>
+        <span>Train stops </span>
         {result.fare.stops.join(", ")}
       </p>
     </div>

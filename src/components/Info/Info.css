@@ -14,13 +14,22 @@
   width: 100%;
 }
 
+.info hr {
+  height: 0;
+  border-top: 1px solid black;
+}
+
 .info p {
   padding: 0 2rem;
   font-size: 2rem;
 }
 
 .info p span:not(.no) {
-  font-weight: 600;
+  display: block;
+  font-weight: 700;
+  font-size: 2rem;
+  letter-spacing: -1px;
+  text-transform: lowercase;
 }
 
 .info p:last-of-type {
