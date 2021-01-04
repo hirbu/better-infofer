@@ -39,49 +39,103 @@ exports.handler = async (event, context) => {
   const results = await page.evaluate((id) => {
     const fares = document.querySelectorAll("#div-results > ul > li");
 
-    return [...fares].map((fare) => ({
-      id: id++,
+    return [...fares].map((fare) => {
+      let changes = [];
 
-      departure: {
-        station: fare.querySelectorAll(".text-1-1rem")[0].textContent.trim(),
-        date: fare
-          .querySelectorAll(".div-itineraries-departure-arrival")[0]
-          .textContent.trim()
-          .replace("Dep ", "")
-          .slice(0, -6),
-        time: fare.querySelectorAll(".text-1-4rem")[0].textContent,
-      },
+      const dataPoints = fare.querySelectorAll("li");
 
-      arrival: {
-        station: fare.querySelectorAll(".text-1-1rem")[1].textContent.trim(),
-        date: fare
-          .querySelectorAll(".div-itineraries-departure-arrival")[1]
-          .textContent.trim()
-          .replace("Arr ", "")
-          .slice(0, -6),
-        time: fare.querySelectorAll(".text-1-4rem")[1].textContent,
-      },
+      for (let i = 0; i < dataPoints.length; i++) {
+        if (i + 1 >= dataPoints.length) {
+          changes = [
+            ...changes,
+            {
+              name: dataPoints[i]
+                .querySelector(".color-blue")
+                .textContent.trim(),
+              type: "end",
+            },
+          ];
+        } else {
+          changes = [
+            ...changes,
+            {
+              name: dataPoints[i++]
+                .querySelector(".color-blue")
+                .textContent.trim(),
+              type: i === 1 ? "begin" : "intermediary",
+              departure: {
+                time: dataPoints[i]
+                  .querySelectorAll(".div-itineraries-departure-arrival")[0]
+                  .textContent.trim()
+                  .substr(-5),
+                date:
+                  dataPoints[i]
+                    .querySelectorAll(".div-itineraries-departure-arrival")[0]
+                    .textContent.trim()
+                    .replace("Dep ", "") + new Date().getFullYear(),
+              },
+              arrival: {
+                time: dataPoints[i]
+                  .querySelectorAll(".div-itineraries-departure-arrival")[1]
+                  .textContent.trim()
+                  .substr(-5),
+                date:
+                  dataPoints[i]
+                    .querySelectorAll(".div-itineraries-departure-arrival")[1]
+                    .textContent.trim()
+                    .replace("Arr ", "") + new Date().getFullYear(),
+              },
+              train: {
+                name: dataPoints[i]
+                  .querySelector(".col-6.col-md-7.col-lg-8")
+                  .querySelector(".col-md-6.col-lg-5.align-self-center")
+                  .textContent.trim()
+                  .replaceAll("\n", " ")
+                  .replace(/ +(?= )/g, "")
+                  .split(" with ")[1],
+                lenght: dataPoints[i]
+                  .querySelector(".col-6.col-md-7.col-lg-8")
+                  .querySelector(".col-md-6.col-lg-5.align-self-center")
+                  .textContent.trim()
+                  .replaceAll("\n", " ")
+                  .replace(/ +(?= )/g, "")
+                  .split(" with ")[0],
+                url: dataPoints[i]
+                  .querySelector(".col-6.col-md-7.col-lg-8")
+                  .querySelector("a").href,
+                operator: dataPoints[i]
+                  .querySelector(".col-6.col-md-7.col-lg-8")
+                  .querySelector(".col-12.col-lg-6.align-self-center")
+                  .textContent.trim()
+                  .replaceAll("\n", " ")
+                  .replace(/ +(?= )/g, "")
+                  .replace("Operated by ", ""),
+                facilities: [
+                  ...dataPoints[i]
+                    .querySelector(".col-6.col-md-7.col-lg-8")
+                    .querySelectorAll(".sr-only"),
+                ].map((facility) => facility.textContent),
+              },
+              stops: {
+                list: [
+                  ...dataPoints[i].querySelectorAll(".color-blue"),
+                ].map((stop) => stop.textContent.trim()),
+                count: dataPoints[i].querySelectorAll(".color-blue").length,
+              },
+            },
+          ];
+        }
+      }
 
-      fare: {
-        completed: fare.querySelectorAll(".color-gray").length > 0,
-        duration: fare.querySelector(".d-inline-block").textContent.trim(),
-        stops: [
-          ...fare
-            .querySelectorAll(".list-group-itinerary-part li")[1]
-            .querySelectorAll(".col-9.color-blue"),
-        ].map((stop) => stop.textContent.trim()),
-      },
-
-      train: {
-        type: fare
-          .querySelector(".col-8 .div-middle div > span")
-          .textContent.trim(),
-        number: fare
-          .querySelector(".col-8 .div-middle div > a")
-          .textContent.trim(),
-        url: fare.querySelector(".col-8 .div-middle div > a").href,
-      },
-    }));
+      return {
+        id: id++,
+        changes: changes,
+        fare: {
+          completed: fare.querySelectorAll(".color-gray").length > 0,
+          duration: fare.querySelector(".d-inline-block").textContent.trim(),
+        },
+      };
+    });
   }, id);
 
   await browser.close();
