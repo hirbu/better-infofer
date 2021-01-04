@@ -67,23 +67,29 @@ exports.handler = async (event, context) => {
                 time: dataPoints[i]
                   .querySelectorAll(".div-itineraries-departure-arrival")[0]
                   .textContent.trim()
-                  .substr(-5),
+                  .substr(-6),
                 date:
                   dataPoints[i]
                     .querySelectorAll(".div-itineraries-departure-arrival")[0]
                     .textContent.trim()
-                    .replace("Dep ", "") + new Date().getFullYear(),
+                    .replace("Dep ", "")
+                    .slice(0, -6) +
+                  " " +
+                  new Date().getFullYear(),
               },
               arrival: {
                 time: dataPoints[i]
                   .querySelectorAll(".div-itineraries-departure-arrival")[1]
                   .textContent.trim()
-                  .substr(-5),
+                  .substr(-6),
                 date:
                   dataPoints[i]
                     .querySelectorAll(".div-itineraries-departure-arrival")[1]
                     .textContent.trim()
-                    .replace("Arr ", "") + new Date().getFullYear(),
+                    .replace("Arr ", "")
+                    .slice(0, -6) +
+                  " " +
+                  new Date().getFullYear(),
               },
               train: {
                 name: dataPoints[i]
@@ -92,8 +98,9 @@ exports.handler = async (event, context) => {
                   .textContent.trim()
                   .replaceAll("\n", " ")
                   .replace(/ +(?= )/g, "")
-                  .split(" with ")[1],
-                lenght: dataPoints[i]
+                  .split(" with ")[1]
+                  .replace(" ", ""),
+                length: dataPoints[i]
                   .querySelector(".col-6.col-md-7.col-lg-8")
                   .querySelector(".col-md-6.col-lg-5.align-self-center")
                   .textContent.trim()

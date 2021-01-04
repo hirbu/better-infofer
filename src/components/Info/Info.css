@@ -19,9 +19,22 @@
   border-top: 1px solid black;
 }
 
-.info p {
+.info hr.double {
+  border-top-width: 2px;
+}
+
+.info p,
+.info h3 {
   padding: 0 2rem;
   font-size: 2rem;
+}
+
+.info h3 {
+  font-size: 2.5rem;
+  text-transform: lowercase;
+  font-weight: 900;
+  letter-spacing: -2px;
+  text-align: center;
 }
 
 .info p span:not(.no) {
@@ -32,6 +45,16 @@
   text-transform: lowercase;
 }
 
+.info p span.no.comma:not(:last-of-type)::after {
+  content: ", ";
+  right: 100%;
+  bottom: 0;
+}
+
 .info p:last-of-type {
   padding-bottom: 2rem;
+}
+
+.info a {
+  color: black;
 }

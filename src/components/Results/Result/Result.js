@@ -7,6 +7,14 @@ import "./Result.css";
 export default function Result({ result }) {
   const { setIndex } = useContext(InfoContext);
 
+  let train = result.changes[0].train.name;
+  if (result.changes.length > 2) {
+    if (result.changes.length > 3) {
+      train += " > (" + (result.changes.length - 3) + ")";
+    }
+    train += " > " + result.changes[result.changes.length - 2].train.name;
+  }
+
   return (
     <li
       className="result"
@@ -14,12 +22,12 @@ export default function Result({ result }) {
         setIndex(result.id);
       }}
     >
-      <h3>{result.departure.time}</h3>
+      <h3>{result.changes[0].departure.time}</h3>
       <div>
-        <p className="first">{result.train.type + result.train.number}</p>
-        <p className="second">{result.fare.duration}</p>
+        <p className="first">{train}</p>
+        <p className="second">{result.fare.duration}utes</p>
       </div>
-      <h3>{result.arrival.time}</h3>
+      <h3>{result.changes[result.changes.length - 2].arrival.time}</h3>
     </li>
   );
 }

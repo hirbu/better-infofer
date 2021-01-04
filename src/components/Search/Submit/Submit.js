@@ -40,6 +40,8 @@ export default function Submit() {
     const dateChecked = moment(date).format("DD.MM.YYYY");
 
     if (departureChecked && arrivalChecked) {
+      setResults([]);
+
       fetch("/.netlify/functions/results", {
         method: "POST",
         headers: {
