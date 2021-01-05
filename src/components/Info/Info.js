@@ -101,5 +101,9 @@ export default function Info() {
     return <div>{changes.map((change) => change)}</div>;
   };
 
-  return <div className="info">{index === -1 ? <Pre /> : <After />}</div>;
+  return (
+    <div className="info">
+      {index === -1 || results.length === 0 ? <Pre /> : <After />}
+    </div>
+  );
 }
