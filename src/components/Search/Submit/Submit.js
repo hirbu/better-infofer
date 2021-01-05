@@ -6,6 +6,7 @@ import QueryContext from "../../../context/query.context";
 import ErrorsContext from "../../../context/errors.context";
 import ResultsContext from "../../../context/results.context";
 import InfoContext from "../../../context/info.context";
+import ScreenContext from "../../../context/navigation.context";
 
 import "./Submit.css";
 
@@ -16,6 +17,7 @@ export default function Submit() {
   const { setDepartureErr, setArrivalErr } = useContext(ErrorsContext);
   const { setResults } = useContext(ResultsContext);
   const { setIndex } = useContext(InfoContext);
+  const { setScreen } = useContext(ScreenContext);
 
   const error = (string, value, setErr) => {
     if (value === "") {
@@ -40,6 +42,7 @@ export default function Submit() {
     const dateChecked = moment(date).format("DD.MM.YYYY");
 
     if (departureChecked && arrivalChecked) {
+      setScreen("aresults");
       setResults([]);
 
       fetch("/.netlify/functions/results", {

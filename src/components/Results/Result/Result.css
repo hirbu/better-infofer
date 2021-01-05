@@ -1,14 +1,29 @@
 .result {
   display: flex;
-  width: calc(100% - 10rem);
+  width: calc(100% - 8rem);
   border-bottom: 1px solid black;
   justify-content: space-between;
   align-items: center;
   font-size: 2rem;
-  padding: 1rem 5rem;
+  padding: 1rem 4rem;
   position: relative;
   cursor: pointer;
   user-select: none;
+  position: relative;
+}
+
+.result.current::before {
+  content: " ";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(100% - 2px);
+  height: 100%;
+  border: 1px solid black;
+}
+
+.result.current:first-of-type::before {
+  height: calc(100% - 2px);
 }
 
 .result h3 {

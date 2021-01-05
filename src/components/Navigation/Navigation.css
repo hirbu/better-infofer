@@ -1,0 +1,21 @@
+.navigation {
+  position: absolute;
+  top: 0.25rem;
+  padding-left: 0.25rem;
+}
+
+.navigation div {
+  display: inline;
+}
+
+.navigation div button {
+  --size: 7rem;
+  background-color: black;
+  border-radius: 9999px;
+  padding: 1rem;
+  width: var(--size);
+  height: var(--size);
+  color: white;
+  font-size: 3rem;
+  border: none;
+}

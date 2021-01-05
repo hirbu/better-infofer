@@ -121,7 +121,12 @@ exports.handler = async (event, context) => {
                   ...dataPoints[i]
                     .querySelector(".col-6.col-md-7.col-lg-8")
                     .querySelectorAll(".sr-only"),
-                ].map((facility) => facility.textContent),
+                ].map((facility) =>
+                  facility.textContent.replace(
+                    " (the ticket is issued compulsory and automatically with the reservation included in the price)",
+                    ""
+                  )
+                ),
               },
               stops: {
                 list: [

@@ -7,3 +7,47 @@
 .app > *:not(:last-of-type) {
   border-right: 1px solid black;
 }
+
+@media only screen and (max-width: 900px) {
+  .app {
+    display: flex;
+    width: 300vw;
+    height: 100vh;
+    height: var(--app-height);
+  }
+
+  .app > *:not(footer):not(.navigation) {
+    width: calc(100vw);
+    height: calc(var(--app-height) - 2rem);
+  }
+
+  .app > div:first-of-type {
+    width: calc(100vw - 4rem);
+  }
+
+  .app > *:not(:last-of-type) {
+    border-right: none;
+  }
+
+  .app.asearch {
+    transform: translateX(0);
+  }
+
+  .app.aresults {
+    transform: translateX(calc(-100vw));
+  }
+
+  .app.aresults footer,
+  .app.aresults .navigation {
+    left: calc(100vw);
+  }
+
+  .app.ainfo {
+    transform: translateX(calc(-200vw));
+  }
+
+  .app.ainfo footer,
+  .app.ainfo .navigation {
+    left: calc(200vw);
+  }
+}
