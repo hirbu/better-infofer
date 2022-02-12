@@ -1,4 +1,5 @@
 const chromium = require("chrome-aws-lambda");
+const puppeteer = require('puppeteer-core');
 
 exports.handler = async (event, context) => {
   const params = JSON.parse(event.body);
@@ -7,7 +8,7 @@ exports.handler = async (event, context) => {
   const arrival = params.arrival;
   const date = params.date;
 
-  const browser = await chromium.puppeteer.launch({
+  const browser = await puppeteer.launch({
     executablePath: await chromium.executablePath,
     args: chromium.args,
     defaultViewport: chromium.defaultViewport,
